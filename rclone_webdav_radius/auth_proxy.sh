@@ -5,7 +5,7 @@ STD_IN=$(</dev/stdin)
 
 # Load environment variables
 set -a
-source /data/rclone/rclone_webdav.env
+source /data/rclone_webdav_radius/rclone_webdav.env
 set +a
 
 user=$(echo $STD_IN | jq --raw-output '.user')
