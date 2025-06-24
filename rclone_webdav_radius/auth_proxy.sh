@@ -13,7 +13,13 @@ pass=$(echo $STD_IN | jq --raw-output '.pass')
 
 echo "user $user and pass $pass" >> ${RCLONE_WEBDAV_LOG_PATH}
 
-auth=$(radtest $user $pass 127.0.0.1 1812 497214700494 |  grep -c 'Access-Accept')
+myhost="$(hostname -f)"
+myhost+="."
+myhost+="$(hostname -y)"
+
+echo "radius host $myhost" >> ${RCLONE_WEBDAV_LOG_PATH} 
+
+auth=$(radtest $user $pass $myhost 1812 497214700494 |  grep -c 'Access-Accept')
 
 if [ $auth == 1 ]; then
     if [ ! -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" ]; then
