@@ -3,15 +3,15 @@
 set -e
 SCRIPT_DIR=$(dirname ${0})
 
-export repoUrl='https://raw.githubusercontent.com/emsi76/unifi_rclone.webdav/refs/heads/main'
-export SERVICE_NAME='rclone_webdav'
+export repoUrl='https://raw.githubusercontent.com/emsi76/unifi_rclone.webdav_radius_auth/refs/heads/main'
+export SERVICE_NAME='rclone_webdav_radius'
 
 # Get the firmware version
 export FIRMWARE_VER=$(ubnt-device-info firmware || true)
 # Get the Harware Model
 export MODEL="$(ubnt-device-info model || true)"
 
-export RCLONE_WEBDAV_FOLDER='/data/rclone'
+export RCLONE_WEBDAV_FOLDER='/data/rclone_webdav'
 
 # Check os version
 
@@ -52,76 +52,43 @@ service_exists() {
 }
 
 # Download files
-get_rclone_webdav(){
-	echo 'get the rclone_webdav files into $RCLONE_WEBDAV_FOLDER from $repoUrl'
+get_rclone_webdav_radius(){
+	echo 'get the rclone_webdav_radius files into $RCLONE_WEBDAV_FOLDER from $repoUrl'
 	mkdir -p $RCLONE_WEBDAV_FOLDER
- 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav.sh" "$repoUrl/rclone_webdav/rclone_webdav.sh"
-	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav.service" "$repoUrl/rclone_webdav/rclone_webdav.service"
- 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.sh" "$repoUrl/rclone_webdav/rclone_ban_failed_users.sh"
- 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.service" "$repoUrl/rclone_webdav/rclone_ban_failed_users.service"
-	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav.env" "$repoUrl/rclone_webdav/rclone_webdav.env" || true)
-	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/htpasswd" "$repoUrl/rclone_webdav/htpasswd" || true)
+ 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh" "$repoUrl/rclone_webdav/rclone_webdav_radius.sh"
+	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service" "$repoUrl/rclone_webdav/rclone_webdav_radius.service"
+	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.env" "$repoUrl/rclone_webdav/rclone_webdav_radius.env" || true)
  	echo 'setting right permissions'
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav.sh
-	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.sh
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav.service
- 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.service
- 	echo 'rclone_webdav now into $RCLONE_WEBDAV_FOLDER'
+ 	echo 'rclone_webdav_radius now into $RCLONE_WEBDAV_FOLDER'
 }
 
-install_webdav_service(){
-	echo install service 'rclone_webdav.service'
-	cp $RCLONE_WEBDAV_FOLDER/rclone_webdav.service  /etc/systemd/system/rclone_webdav.service
+install_webdav_radius_service(){
+	echo install service 'rclone_webdav_radius.service'
+	cp $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service  /etc/systemd/system/rclone_webdav_radius.service
 	sudo systemctl daemon-reload
-	sudo systemctl start rclone_webdav.service
-	sudo systemctl enable rclone_webdav.service
- 	echo service 'rclone_webdav.service' installed
+	sudo systemctl start rclone_webdav_radius.service
+	sudo systemctl enable rclone_webdav_radius.service
+ 	echo service 'rclone_webdav_radius.service' installed
 }
 
-update_webdav_service(){
-	echo update service 'rclone_webdav.service'
-	sudo systemctl stop rclone_webdav.service
-	sudo systemctl disable rclone_webdav.service
-	cp $RCLONE_WEBDAV_FOLDER/rclone_webdav.service  /etc/systemd/system/rclone_webdav.service
+update_webdav_radius_service(){
+	echo update service 'rclone_webdav_radius.service'
+	sudo systemctl stop rclone_webdav_radius.service
+	sudo systemctl disable rclone_webdav_radius.service
+	cp $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service  /etc/systemd/system/rclone_webdav_radius.service
 	sudo systemctl daemon-reload
-	sudo systemctl start rclone_webdav.service
-	sudo systemctl enable rclone_webdav.service
- 	echo service 'rclone_webdav.service' updated
+	sudo systemctl start rclone_webdav_radius.service
+	sudo systemctl enable rclone_webdav_radius.service
+ 	echo service 'rclone_webdav_radius.service' updated
 }
 
-uninstall_webdav_service(){
-	echo uninstall service 'rclone_webdav.service'
-	sudo systemctl stop rclone_webdav.service
-	sudo systemctl disable rclone_webdav.service
-	rm $RCLONE_WEBDAV_FOLDER/rclone_webdav.service
-	sudo systemctl daemon-reload
-}
-
-install_rclone_ban_failed_users_service(){
-	echo install service 'rclone_ban_failed_users.service'
-	cp $RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.service  /etc/systemd/system/rclone_ban_failed_users.service
-	sudo systemctl daemon-reload
-	sudo systemctl start rclone_ban_failed_users.service
-	sudo systemctl enable rclone_ban_failed_users.service
- 	echo service 'rclone_ban_failed_users.service' installed
-}
-
-update_rclone_ban_failed_users_service(){
-	echo update service 'rclone_ban_failed_users.service'
-	sudo systemctl stop rclone_ban_failed_users.service
-	sudo systemctl disable rclone_ban_failed_users.service
-	cp $RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.service  /etc/systemd/system/rclone_ban_failed_users.service
-	sudo systemctl daemon-reload
-	sudo systemctl start rclone_ban_failed_users.service
-	sudo systemctl enable rclone_ban_failed_users.service
- 	echo service 'rclone_ban_failed_users.service' updated
-}
-
-uninstall_rclone_ban_failed_users_service(){
-	echo uninstall service 'rclone_ban_failed_users.service'
-	sudo systemctl stop rclone_ban_failed_users.service
-	sudo systemctl disable rclone_ban_failed_users.service
-	rm $RCLONE_WEBDAV_FOLDER/rclone_ban_failed_users.service
+uninstall_webdav_radius_service(){
+	echo uninstall service 'rclone_webdav_radius.service'
+	sudo systemctl stop rclone_webdav_radius.service
+	sudo systemctl disable rclone_webdav_radius.service
+	rm $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service
 	sudo systemctl daemon-reload
 }
 
@@ -134,29 +101,21 @@ install_rclone(){
 
 
 check_version_model_dir
-get_rclone_webdav
+get_rclone_webdav_radius
 install_rclone
 
-if service_exists rclone_webdav; 
+if service_exists rclone_webdav_radius; 
 	then
-		update_webdav_service
+		update_webdav_radius_service
 		echo service updated
     	else
-		install_webdav_service
-		echo service installed
-fi
-if service_exists rclone_ban_failed_users; 
-	then
-		update_rclone_ban_failed_users_service
-		echo service updated
-    	else
-		install_rclone_ban_failed_users_service
+		install_webdav_radius_service
 		echo service installed
 fi
 
 # Load environment variables
 set -a
-source /data/rclone/rclone_webdav.env
+source /data/rclone/rclone_webdav_radius.env
 set +a
 
-echo your WebDav server should now be running on port $RCLONE_WEBDAV_PORT with root folder: $RCLONE_WEBDAV_ROOT_PATH
+echo your WebDav _radius server should now be running on port $RCLONE_WEBDAV_PORT with root folder: $RCLONE_WEBDAV_ROOT_PATH
