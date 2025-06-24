@@ -152,7 +152,7 @@ installation(){
   
   if service_exists rclone_webdav_radius; 
   	then
-  		update_webdav_service_radius
+  		update_webdav_radius_service
   		echo service updated
       	else
   		install_webdav_radius_service
@@ -176,7 +176,7 @@ if $install;
     set -a
       source $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.env
     set +a
-    echo your WebDav server should now be running on port $RCLONE_WEBDAV_PORT with root folder: $RCLONE_WEBDAV_ROOT_PATH
+    echo your WebDav radius server should now be running on port $RCLONE_WEBDAV_PORT with root folder: $RCLONE_WEBDAV_ROOT_PATH
   else
     if $uninstall;
       then
