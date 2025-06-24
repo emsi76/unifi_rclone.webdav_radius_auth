@@ -1,0 +1,11 @@
+[Unit]
+Description=Rclone WebDav Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/data/rclone/rclone_webdav.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
