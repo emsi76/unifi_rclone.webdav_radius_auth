@@ -93,9 +93,9 @@ service_exists() {
 get_rclone_webdav_radius(){
 	echo 'get the rclone_webdav_radius files into $RCLONE_WEBDAV_FOLDER from $repoUrl'
 	mkdir -p $RCLONE_WEBDAV_FOLDER
- 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh" "$repoUrl/rclone_webdav/rclone_webdav_radius.sh"
-	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service" "$repoUrl/rclone_webdav/rclone_webdav_radius.service"
-	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.env" "$repoUrl/rclone_webdav/rclone_webdav_radius.env" || true)
+ 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.sh"
+	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.service"
+	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.env" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.env" || true)
  	echo 'setting right permissions'
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service
