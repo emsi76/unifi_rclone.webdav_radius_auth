@@ -95,10 +95,12 @@ get_rclone_webdav_radius(){
 	mkdir -p $RCLONE_WEBDAV_FOLDER
  	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.sh"
 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.service"
+ 	wget -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service" "$repoUrl/rclone_webdav_radius/auth_proxy.sh"
 	(wget -nc -O "$RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.env" "$repoUrl/rclone_webdav_radius/rclone_webdav_radius.env" || true)
  	echo 'setting right permissions'
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.sh
 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/rclone_webdav_radius.service
+ 	chmod oug+rx $RCLONE_WEBDAV_FOLDER/auth_proxy.sh
  	echo 'rclone_webdav now into $RCLONE_WEBDAV_FOLDER'
 }
 
