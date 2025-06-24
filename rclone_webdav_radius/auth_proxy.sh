@@ -1,7 +1,7 @@
 #!/bin/bash
 
 STD_IN=$(</dev/stdin)
-#echo "STDIN is $STD_IN" >> ./auth_proxy_log.txt
+echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
 
 # Load environment variables
 set -a
@@ -11,7 +11,7 @@ set +a
 user=$(echo $STD_IN | jq --raw-output '.user')
 pass=$(echo $STD_IN | jq --raw-output '.pass')
 
-#echo "user $user and pass $pass" >> ./auth_proxy_log.txt
+echo "user $user and pass $pass" >> ${RCLONE_WEBDAV_LOG_PATH}
 
 auth=$(radtest $user $pass 127.0.0.1 1812 497214700494 |  grep -c 'Access-Accept')
 
