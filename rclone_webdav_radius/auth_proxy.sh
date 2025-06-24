@@ -19,7 +19,7 @@ myhost+="$(hostname -y)"
 
 echo "radius host $myhost" >> ${RCLONE_WEBDAV_LOG_PATH} 
 
-auth=$(radtest $user $pass $myhost 1812 497214700494 |  grep -c 'Access-Accept')
+auth=$(radtest $user $pass $myhost $RCLONE_WEBDAV_RADIUS_PORT $RCLONE_WEBDAV_RADIUS_SECRET |  grep -c 'Access-Accept')
 
 if [ $auth == 1 ]; then
     if [ ! -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" ]; then
