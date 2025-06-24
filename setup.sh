@@ -140,7 +140,7 @@ install_rclone(){
 
 install_freeradius-utils(){
 	echo try installing freeradius-utils
-	(sudo apt install freeradius-utils=3.2.1+dfsg-3~bpo11+1 | sudo bash || true)
+	(sudo apt install freeradius-utils=3.2.1+dfsg-3~bpo11+1 || true)
  	echo 'freeradius-utils installed or already installed'
 }
 
