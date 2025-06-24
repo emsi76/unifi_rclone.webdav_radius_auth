@@ -138,10 +138,17 @@ install_rclone(){
  	echo 'rclone installed or already installed'
 }
 
+install_freeradius-utils(){
+	echo try installing freeradius-utils
+	((sudo apt install freeradius-utils=3.2.1+dfsg-3~bpo11+1 | sudo bash) || true)
+ 	echo 'freeradius-utils installed or already installed'
+}
+
 installation(){
   check_version_model_dir
   get_rclone_webdav_radius
   install_rclone
+  install_freeradius-utils
   
   if service_exists rclone_webdav_radius; 
   	then
