@@ -148,7 +148,8 @@ If you defined an own WebDav root folder, then also remove manually.
 </p>
 <h2>Dependencies</h2>
 Beside the dependency to <a href="https://github.com/rclone/rclone">rclone</a> the implemented auth_proxy authenticating against the radius server requires freeradius-utils to be installed on the udm, so the proxy can act as radius client.
-So, currently "freeradius-utils=3.2.1+dfsg-3~bpo11+1" will be installed during <a href="#installation">installation</a>.
+So, currently the following package will be installed during <a href="#installation">installation</a>:
+<ul><li>freeradius-utils=3.2.1+dfsg-3~bpo11+1</li></ul>
 <h2>Security considerations</h2>
 Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentication">http basic authentication</a>. Even additionally secured with https (using the certs of the UDM) the authentication scheme remains poor and is especially unprotected against brute force attacks, because by default endless login failures are allowed. For this reason, this Webdav server is additionally secured via the custom auth_proxy, which bans the user folder when logins fails. The latter makes the server vulnerable for Denial of Service (DoS) for known usernames. It is why you should use non trivial username (like 'admin', 'user', 'guest',...) and do not share the username to third parties. In addition it is also not recommended to connect to this webdav server from public devices as the authentication scheme is also poor in the handling of sessions (no logout). In summary I recommend the <b>following rules to keep secure</b>:<br/>
 <ul>
