@@ -1,6 +1,7 @@
 #!/bin/bash
 
 function exists_in_list() {
+    echo "List=$1 Delimiter=$2 Value=$3" >> ${RCLONE_WEBDAV_LOG_PATH}
     LIST=$1
     DELIMITER=$2
     VALUE=$3
