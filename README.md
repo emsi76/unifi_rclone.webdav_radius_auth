@@ -84,7 +84,7 @@ RCLONE_WEBDAV_RADIUS_USERS=</code>
     User Management
     <p>
       User Management is done via default user management of the radius server (see <a href="https://help.ui.com/hc/en-us/articles/360015268353-Configuring-a-RADIUS-Server-in-UniFi">unifi radius configuration</a>).
-      Additionally you can restrict the webdav access to specific radius users only by defining them as list in the parameter RCLONE_WEBDAV_RADIUS_USERS,
+      Additionally you can restrict the webdav access to specific radius users only by defining them as list in the environment parameter RCLONE_WEBDAV_RADIUS_USERS above.
     </p>
     <p>
       The user folder of users with failed logins will be banned (renamed with extension "_banned"). To reactivate the access you have to manually rename the folder (via mv command) to the name of the user, so removing the extension "_banned".
