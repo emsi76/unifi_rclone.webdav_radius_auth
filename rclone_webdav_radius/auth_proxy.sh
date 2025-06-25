@@ -31,6 +31,7 @@ else
         has_access=true
     else
         echo "User is not in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
+        has_access=false
     fi
 fi
 
