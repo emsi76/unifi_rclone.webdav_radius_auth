@@ -68,8 +68,8 @@ RCLONE_WEBDAV_SSL_CERT=/data/eus_certificates/unifi-os.crt
 RCLONE_WEBDAV_SSL_KEY=/data/eus_certificates/unifi-os.key
 # Definig the radius server port (default 1812)
 RCLONE_WEBDAV_RADIUS_PORT=1812
-# Definig the radius server secret
-RCLONE_WEBDAV_RADIUS_SECRET=S3CR3T
+# Definig the radius server secret <mark>mandatory parameter!</mark>
+RCLONE_WEBDAV_RADIUS_SECRET=<mark>S3CR3T</mark>
 # Definig the (comma separated) list of radius users
 # allowed to access webdav server (all radius users allowed if empty)
 RCLONE_WEBDAV_RADIUS_USERS=</code>
