@@ -1,5 +1,5 @@
 # unifi_rclone.webdav_radius_auth
-Simple <b>Webdav Server</b> for Unifi Dream Machine based on Rclone (comparable to my <a href="https://github.com/emsi76/unifi_rclone.webdav">previous one</a> ) additionally <b>authenticating users against built-in radius server</b>
+Simple <b>Webdav Server</b> for Unifi Dream Machine based on Rclone (comparable to my <a href="https://github.com/emsi76/unifi_rclone.webdav">previous one</a> ) now <b>authenticating users against built-in radius server</b>
 <p>
 Transform your Unifi gateway to a NAS with this simple multi-user <a href="http://www.webdav.org">Webdav</a> Server for Unifi Dream Machine (UDM) based on <a href="https://github.com/rclone/rclone">rclone</a>.
 </p>
