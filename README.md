@@ -10,7 +10,7 @@ Transform your Unifi gateway to a NAS with this simple multi-user <a href="http:
   <li>User <b>authentication</b> is done <b>against built-in radius server</b>, so no further user management required</li>
   <li>Each user gets his own dedicated "home" folder under the overall webdav root</li>
   <li>Secured with <b>https using the certs of the UDM</b>/li>
-  <liAuthentication fails lead to a banned user's webdav folder</li>
+  <li>Authentication fails lead to a banned user's webdav folder</li>
   <li>Low consumption of resources (CPU / Mem)</li>
 </ul>
 </p>
