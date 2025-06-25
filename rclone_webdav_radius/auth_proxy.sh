@@ -4,7 +4,7 @@ function exists_in_list() {
     LIST=$1
     DELIMITER=$2
     VALUE=$3
-    [[ "$LIST" =~ ($DELIMITER|^)$VALUE($DELIMITER|$) ]]
+    echo $LIST | tr "$DELIMITER" '\n' | grep -F -q -x "$VALUE"
 }
 
 STD_IN=$(</dev/stdin)
@@ -26,7 +26,7 @@ if [ -z "$RCLONE_WEBDAV_RADIUS_USERS" ]; then
     echo "Empty radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
     has_access=1
 else
-    if [ exists_in_list "$RCLONE_WEBDAV_RADIUS_USERS" " " $user ]; then
+    if [ exists_in_list "$RCLONE_WEBDAV_RADIUS_USERS" "," $user ]; then
         echo "User is in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
         has_access=1
     else
