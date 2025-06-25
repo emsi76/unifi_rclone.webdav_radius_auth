@@ -21,7 +21,8 @@ pass=$(echo $STD_IN | jq --raw-output '.pass')
 echo "user $user and pass $pass" >> ${RCLONE_WEBDAV_LOG_PATH}
 has_access=false
 
-if [ -z "${RCLONE_WEBDAV_RADIUS_USERS}" ]; then
+echo "Radius allowed user list is $RCLONE_WEBDAV_RADIUS_USERS" >> ${RCLONE_WEBDAV_LOG_PATH}
+if [ -z "$RCLONE_WEBDAV_RADIUS_USERS" ]; then
     echo "Empty radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
     has_access=true
 else
