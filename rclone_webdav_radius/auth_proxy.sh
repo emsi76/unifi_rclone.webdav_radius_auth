@@ -4,7 +4,7 @@ function exists_in_list() {
     LIST=$1
     DELIMITER=$2
     VALUE=$3
-    echo $LIST | tr "$DELIMITER" '\n' | grep -F -q -x "$VALUE"
+    echo $LIST | tr "$DELIMITER" '\n' | grep -F -x "$VALUE"
 }
 
 STD_IN=$(</dev/stdin)
