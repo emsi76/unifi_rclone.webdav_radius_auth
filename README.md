@@ -25,7 +25,6 @@ Easy 1 step <a href="https://github.com/emsi76/unifi_rclone.webdav_radius_auth/b
   <li>Applying changes in UnifiOS of your Unifi Dream Machines (UDM) may lead to loss of warranty.</li>
   <li>No liability for damage or malfunctions of your Dream Machine caused by the installation of this utility.</li>
   <li>Operating a WebDav Server on your UDM and so letting users uploading (big) files can cause the disk storage to run out of space with corresponding consequences for the stability of the entire system (especially if you are using the internal disk as webdav root).</li>
-  <li>The default installation creates a 'webdav' WebDav user with default password 'webdav'. Be aware to change the users/passwords under the htpasswd file especially before opening ports of your firewall.</li>
   <li>Upgrading your Dream Machine firmware typically requires to install again.</li>
   <li>WebDav data under the root folder currently is persitent after reboot or even firmware update. But future upgrades could lead to data loss depending on what unifi is changing in the UnifiOS (for critical WebDav data: please backup root folder before update).</li>
   </ul>
@@ -94,7 +93,7 @@ RCLONE_WEBDAV_RADIUS_USERS=</code>
 Don't forget to add a firewall rule (or a port forward rule), if you want to access the webdav server from WAN (and read the <a href="#security-considerations">Security considerations</a> before).
 
 <h2>Update</h2>
-Same as <a href="#installation">Installation</a> (existing config, htpasswd and root folder won't be touched, remove then manually if you want fresh one).
+Same as <a href="#installation">Installation</a> (existing config aka environement parameters like root folder won't be touched, remove then manually if you want fresh one).
   
 <h2>Use (tested WebDav Clients)</h2>
 Connect with your preferred WebDav Client via https to the url/ip of your UDM using the configured port (defaults: 55008).
