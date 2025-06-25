@@ -147,7 +147,7 @@ You will have to remove your config files (rclone_webdav_radius.env) as well as 
 If you defined an own WebDav root folder, then also remove manually.
 </p>
 <h2>Dependencies</h2>
-Beside the dependency to <a href="https://github.com/rclone/rclone">rclone</a> the implemented auth_proxy authenticating against the radius server requires freeradius-utils to be installed on the udm, so the proxy can act as radius client.
+Beside the dependency to the built-in radius server and to <a href="https://github.com/rclone/rclone">rclone</a> the implemented auth_proxy authenticating against the radius server requires freeradius-utils to be installed on the udm, so the proxy can act as radius client.
 So, currently the following package will be installed during <a href="#installation">installation</a>:
 <ul><li>freeradius-utils=3.2.1+dfsg-3~bpo11+1</li></ul>
 <h2>Security considerations</h2>
