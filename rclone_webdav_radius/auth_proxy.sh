@@ -8,7 +8,7 @@ exists_in_list() {
 }
 
 STD_IN=$(</dev/stdin)
-echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
+#echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
 
 # Load environment variables
 set -a
@@ -18,10 +18,10 @@ set +a
 user=$(echo $STD_IN | jq --raw-output '.user')
 pass=$(echo $STD_IN | jq --raw-output '.pass')
 
-echo "user $user and pass $pass" >> ${RCLONE_WEBDAV_LOG_PATH}
+#echo "user $user and pass $pass" >> ${RCLONE_WEBDAV_LOG_PATH}
 has_access=0
 
-echo "Radius allowed user list is $RCLONE_WEBDAV_RADIUS_USERS" >> ${RCLONE_WEBDAV_LOG_PATH}
+#echo "Radius allowed user list is $RCLONE_WEBDAV_RADIUS_USERS" >> ${RCLONE_WEBDAV_LOG_PATH}
 if [ -z "$RCLONE_WEBDAV_RADIUS_USERS" ]; then
     echo "Empty radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
     has_access=1
