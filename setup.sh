@@ -142,11 +142,11 @@ install_rclone(){
 
 install_freeradius-utils(){
 	echo try installing freeradius-utils
-	(sudo apt install freeradius-utils=3.2.1+dfsg-3~bpo11+1 || true)
+	(sudo apt install -y freeradius-utils=3.2.1+dfsg-3~bpo11+1 || true)
  	echo 'freeradius-utils installed or already installed'
 }
 uninstall_freeradius-utils(){
-	(sudo apt-get purge --auto-remove -y freeradius-utils || true)
+	(sudo apt-get purge --auto-remove -y freeradius-utils=3.2.1+dfsg-3~bpo11+1 || true)
  	echo 'freeradius-utils uninstalled or already uninstalled'
 }
 
