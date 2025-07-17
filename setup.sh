@@ -145,6 +145,10 @@ install_freeradius-utils(){
 	(sudo apt install freeradius-utils=3.2.1+dfsg-3~bpo11+1 || true)
  	echo 'freeradius-utils installed or already installed'
 }
+uninstall_freeradius-utils(){
+	(sudo apt-get purge --auto-remove -y freeradius-utils || true)
+ 	echo 'freeradius-utils uninstalled or already uninstalled'
+}
 
 installation(){
   check_version_model_dir
@@ -167,7 +171,8 @@ uninstallation(){
   if service_exists rclone_webdav_radius; 
   	then
   		uninstall_webdav_radius_service
-  		echo service ed
+    		uninstall_freeradius-utils
+  		echo service uninstalled
   fi
 }
 
