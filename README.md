@@ -44,6 +44,11 @@ Successfully tested on (only one device so far due to lack of hardware):
   <td>Model: UniFi Dream Machine Pro (UDM-Pro)</td>
   <td><ul><li>Firmware: 4.0.20</li><li>Firmware: 4.0.21</li><li>Firmware: 4.1.13</li><li>Firmware: 4.2.12</li><li>Firmware: 4.3.6</li><li>Firmware: 4.4.6</li><li>Firmware: 5.0.12</li><li>Firmware: 5.0.16</li></ul></td>
   </tr>
+  <tr>
+  <td>Family: UniFi Cloud Gateway (UCG)</td>
+  <td>Model: UniFi Cloud Gateway Fiber</td>
+  <td><ul><li>Firmware: 5.0.16</li></ul></td>
+  </tr>
   </table>
 </p>
 <h2>Installation</h2>
