@@ -63,7 +63,7 @@ check_version_model_dir(){
 	fi
 
 	case "${MODEL}" in
-	"UniFi Dream Machine Pro"|"UniFi Dream Machine"|"UniFi Dream Router"|"UniFi Dream Machine SE")
+	"UniFi Dream Machine Pro"|"UniFi Dream Machine"|"UniFi Dream Router"|"UniFi Dream Machine SE"|"UniFi Cloud Gateway Fiber")
 		echo "${MODEL} running firmware ${FIRMWARE_VER} detected, installing rclone.webdav in ${DATA_DIR}..."
 		;;
 		*)
