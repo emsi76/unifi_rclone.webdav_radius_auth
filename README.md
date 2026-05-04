@@ -10,7 +10,7 @@ Transform your Unifi gateway to a NAS with this simple multi-user <a href="http:
   <li>Configurable webdav port and root path - which can also be configured to your disk (hdd/sdd)</li>
   <li>User <b>authentication</b> is done <b>against built-in radius server</b>, so no further user management required</li>
   <li>Each user gets his own dedicated "home" folder under the overall webdav root</li>
-  <li>Secured with <b>https using the certs of the UDM</b></li>
+  <li>Secured with <b>https using the certs of the UDM / UCG</b></li>
   <li>Authentication fails lead to a banned user's webdav folder</li>
   <li>Low consumption of resources (CPU / Mem)</li>
 </ul>
@@ -19,14 +19,14 @@ Transform your Unifi gateway to a NAS with this simple multi-user <a href="http:
 Easy 1 step <a href="https://github.com/emsi76/unifi_rclone.webdav_radius_auth/blob/main/README.md#installation">installation</a> and 2 step <a href="https://github.com/emsi76/unifi_rclone.webdav_radius_auth#configuration">configuration</a> should not take more than some minutes! :-)  
 </p>
 <p>
-  This set of scripts installs rclone as WebDav Server - see <a href="https://rclone.org/commands/rclone_serve_webdav/">rclone serve webdav</a> and set it up as service on your UDM with a custom <a href="https://rclone.org/commands/rclone_serve_webdav/#auth-proxy">rclone auth proxy</a> to authenticate against the built-in radius server of the UDM.
+  This set of scripts installs rclone as WebDav Server - see <a href="https://rclone.org/commands/rclone_serve_webdav/">rclone serve webdav</a> and set it up as service on your UDM with a custom <a href="https://rclone.org/commands/rclone_serve_webdav/#auth-proxy">rclone auth proxy</a> to authenticate against the built-in radius server of the UDM / UCG.
 </p>
 <h2>Important Notes</h2>
 <p>
   <ul>
-  <li>Applying changes in UnifiOS of your Unifi Dream Machines (UDM) may lead to loss of warranty.</li>
+  <li>Applying changes in UnifiOS of your Unifi Dream Machines (UDM) or Unifi Cloud Gateway (UCG) may lead to loss of warranty.</li>
   <li>No liability for damage or malfunctions of your Dream Machine caused by the installation of this utility.</li>
-  <li>Operating a WebDav Server on your UDM and so letting users uploading (big) files can cause the disk storage to run out of space with corresponding consequences for the stability of the entire system (especially if you are using the internal disk as webdav root).</li>
+  <li>Operating a WebDav Server on your UDM/UCG and so letting users uploading (big) files can cause the disk storage to run out of space with corresponding consequences for the stability of the entire system (especially if you are using the internal disk as webdav root).</li>
   <li>Upgrading your Dream Machine firmware typically requires to install again.</li>
   <li>WebDav data under the root folder currently is persitent after reboot or even firmware update. But future upgrades could lead to data loss depending on what unifi is changing in the UnifiOS (for critical WebDav data: please backup root folder before update).</li>
   </ul>
@@ -52,7 +52,7 @@ Successfully tested on (only one device so far due to lack of hardware):
   </table>
 </p>
 <h2>Installation</h2>
-<a href="https://help.ui.com/hc/en-us/articles/204909374-UniFi-Connect-with-Debug-Tools-SSH">SSH into your UDM</a> and enter:<br/>&nbsp;<br/>
+<a href="https://help.ui.com/hc/en-us/articles/204909374-UniFi-Connect-with-Debug-Tools-SSH">SSH into your UDM/UCG</a> and enter:<br/>&nbsp;<br/>
 <code>sudo -v ; curl https://raw.githubusercontent.com/emsi76/unifi_rclone.webdav_radius_auth/refs/heads/main/setup.sh | sudo bash -s -- -i</code>
 
 <h2>Configuration</h2>
@@ -103,8 +103,8 @@ Don't forget to add a firewall rule (or a port forward rule), if you want to acc
 Same as <a href="#installation">Installation</a> (existing config aka environement parameters like root folder won't be touched, remove then manually if you want fresh one).
   
 <h2>Use (tested WebDav Clients)</h2>
-Connect with your preferred WebDav Client via https to the url/ip of your UDM using the configured port (defaults: 55008).
-Depending on the ssl certs you are using on your UDM you will have to trust the cert.<br/>
+Connect with your preferred WebDav Client via https to the url/ip of your UDM/UCG using the configured port (defaults: 55008).
+Depending on the ssl certs you are using on your UDM/UCG you will have to trust the cert.<br/>
 Following clients were successfully tested:
 <p>
   <table border=1 cellspacing=10>
@@ -153,11 +153,11 @@ You will have to remove your config files (rclone_webdav_radius.env) as well as 
 If you defined an own WebDav root folder, then also remove manually.
 </p>
 <h2>Dependencies</h2>
-Beside the dependency to the built-in radius server and to <a href="https://github.com/rclone/rclone">rclone</a> the implemented auth_proxy authenticating against the radius server requires freeradius-utils to be installed on the udm, so the proxy can act as radius client.
+Beside the dependency to the built-in radius server and to <a href="https://github.com/rclone/rclone">rclone</a> the implemented auth_proxy authenticating against the radius server requires freeradius-utils to be installed on the UDM/UCG, so the proxy can act as radius client.
 So, currently the following package will be installed during <a href="#installation">installation</a>:
 <ul><li>freeradius-utils=3.2.1+dfsg-3~bpo11+1</li></ul>
 <h2>Security considerations</h2>
-Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentication">http basic authentication</a>. Even additionally secured with https (using the certs of the UDM) the authentication scheme remains poor and is especially unprotected against brute force attacks, because by default endless login failures are allowed. For this reason, this Webdav server is additionally secured via the custom auth_proxy, which bans the user folder when a login fails. The latter makes the server vulnerable for Denial of Service (DoS) for known usernames. It is why you should use non trivial username (like 'admin', 'user', 'guest',...) and do not share the username to third parties. In addition it is also not recommended to connect to this webdav server from public devices as the authentication scheme is also poor in the handling of sessions (no logout). In summary I recommend the <b>following rules to keep secure</b>:<br/>
+Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentication">http basic authentication</a>. Even additionally secured with https (using the certs of the UDM/UCG) the authentication scheme remains poor and is especially unprotected against brute force attacks, because by default endless login failures are allowed. For this reason, this Webdav server is additionally secured via the custom auth_proxy, which bans the user folder when a login fails. The latter makes the server vulnerable for Denial of Service (DoS) for known usernames. It is why you should use non trivial username (like 'admin', 'user', 'guest',...) and do not share the username to third parties. In addition it is also not recommended to connect to this webdav server from public devices as the authentication scheme is also poor in the handling of sessions (no logout). In summary I recommend the <b>following rules to keep secure</b>:<br/>
 <ul>
   <li><b>Do not use standard usernames</b> ('admin', 'user', 'guest',...)</li>
   <li><b>Do not connect</b> to this Webdav server <b>from public devices/computers</b>, that are not in your ownership or shared with third parties..</li>
@@ -175,5 +175,5 @@ Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentica
 <ul>
 <li>to <a href="ui.com">Unifi</a> for the great hardware/firmware accessible via ssh/bash</li>
 <li>to <a href="https://github.com/rclone/rclone">rclone</a> for the webdav server software which this utility is based on</li>
-<li>to <a href="https://glennr.nl/s/unifi-lets-encrypt">Glenn R. unifi-lets-encrypt</a> making it even possible to run the webdav server with http<b>s</b> and let's encrypt certs of UDM</li>
+<li>to <a href="https://glennr.nl/s/unifi-lets-encrypt">Glenn R. unifi-lets-encrypt</a> making it even possible to run the webdav server with http<b>s</b> and let's encrypt certs of UDM/UCG</li>
 </ul>
