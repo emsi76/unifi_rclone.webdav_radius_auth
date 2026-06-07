@@ -82,7 +82,9 @@ RCLONE_WEBDAV_RADIUS_PORT=1812
 RCLONE_WEBDAV_RADIUS_SECRET=<mark>S3CR3T</mark>
 # Definig the (comma separated) list of radius users
 # allowed to access webdav server (all radius users allowed if empty)
-RCLONE_WEBDAV_RADIUS_USERS=</code>
+RCLONE_WEBDAV_RADIUS_USERS=
+# ban duration in seconds if login failed
+RCLONE_WEBDAV_BAN_DURATION=600</code>
     </p>
     <p>RCLONE_WEBDAV_RADIUS_SECRET is the only mandatory parameter to set to the secret of your radius config (see <a href="https://help.ui.com/hc/en-us/articles/360015268353-Configuring-a-RADIUS-Server-in-UniFi">unifi radius configuration</a>)</p>
     <p>You can set the path to your disk (ssd/hdd) as RCLONE_WEBDAV_ROOT_PATH if you have a corresponding storage.</p>
