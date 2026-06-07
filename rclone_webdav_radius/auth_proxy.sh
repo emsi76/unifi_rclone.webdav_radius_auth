@@ -4,7 +4,7 @@ exists_in_list() {
     LIST=$1
     DELIMITER=$2
     VALUE=$3
-    echo $LIST | tr "$DELIMITER" '\n' | grep -F -x "$VALUE"
+    #echo $LIST | tr "$DELIMITER" '\n' | grep -F -x "$VALUE"
 }
 
 STD_IN=$(</dev/stdin)
@@ -23,14 +23,14 @@ has_access=0
 
 #echo "Radius allowed user list is $RCLONE_WEBDAV_RADIUS_USERS" >> ${RCLONE_WEBDAV_LOG_PATH}
 if [ -z "$RCLONE_WEBDAV_RADIUS_USERS" ]; then
-    echo "Empty radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
+    #echo "Empty radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
     has_access=1
 else
     if [ $(exists_in_list "$RCLONE_WEBDAV_RADIUS_USERS" "," "$user") ]; then
-        echo "User is in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
+        #echo "User is in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
         has_access=1
     else
-        echo "User is not in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
+        #echo "User is not in the radius allowed list" >> ${RCLONE_WEBDAV_LOG_PATH}
         has_access=0
     fi
 fi
@@ -40,16 +40,32 @@ if [ $has_access -eq 1 ]; then
     myhost+="."
     myhost+="$(hostname -y)"
     
-    echo "radius host $myhost" >> ${RCLONE_WEBDAV_LOG_PATH} 
+    #echo "radius host $myhost" >> ${RCLONE_WEBDAV_LOG_PATH} 
     
     auth=$(radtest $user $pass $myhost $RCLONE_WEBDAV_RADIUS_PORT $RCLONE_WEBDAV_RADIUS_SECRET |  grep -c 'Access-Accept')
     
     if [ $auth == 1 ]; then
-        if [ ! -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" ]; then
+        #banned?
+        if [ ! -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" ]; then # not banned
             mkdir -p "${RCLONE_WEBDAV_ROOT_PATH}/${user}/"
             printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
-        else
-            printf "Blocked login: auth not successful for user $user"
+        else # successfull login but banned
+            # ban duration defined?
+            if [ -n "${RCLONE_WEBDAV_BAN_DURATION}" ]; then
+                MTIME=$(stat -c %Y "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/") # mtime of banned folder as Unix-Timestamp
+                NOW=$(date +%s)
+                AGE=$((NOW - MTIME))
+                #already banned longer than ban duration?
+                if [ "$AGE" -gt "${RCLONE_WEBDAV_BAN_DURATION}" ]; then
+                    #unban and accept
+                    mv "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" "${RCLONE_WEBDAV_ROOT_PATH}/${user}/"
+                    printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
+                else
+                    printf "Still blocked login: auth not successful for user $user"
+                fi 
+            else #ban duration not defined, so block
+                printf "Blocked login: auth not successful for user $user"
+            fi
         fi
     else
         if [ -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}/" ]; then
