@@ -57,7 +57,7 @@ if [ $has_access -eq 1 ]; then
                 #already banned longer than ban duration?
                 if [ "$AGE" -gt "${RCLONE_WEBDAV_BAN_DURATION}" ]; then
                     #unban and accept
-                    echo "unban ${user}" >> ${RCLONE_WEBDAV_LOG_PATH}
+                    echo "unban ${user} banned since ${AGE}" >> ${RCLONE_WEBDAV_LOG_PATH}
                     mv "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" "${RCLONE_WEBDAV_ROOT_PATH}/${user}/"
                     printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
                 else
