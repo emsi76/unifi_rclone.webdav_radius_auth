@@ -68,6 +68,7 @@ if [ $has_access -eq 1 ]; then
             fi
         fi
     else
+        echo "Failed login: auth not successful for user $user"
         if [ -d "${RCLONE_WEBDAV_ROOT_PATH}/${user}/" ]; then
             mv "${RCLONE_WEBDAV_ROOT_PATH}/${user}/" "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/"
         fi
