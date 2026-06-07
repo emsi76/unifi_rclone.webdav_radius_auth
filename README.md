@@ -99,7 +99,7 @@ RCLONE_WEBDAV_BAN_DURATION=600</code>
       Additionally you can restrict the webdav access to specific radius users only by defining them as list in the environment parameter RCLONE_WEBDAV_RADIUS_USERS above.
     </p>
     <p>
-      The user folder of users with failed logins will be banned (renamed with extension "_banned"). To reactivate the access you have to manually rename the folder (via mv command) to the name of the user, so removing the extension "_banned".
+      The user folder of users with failed logins will be banned (renamed with extension "_banned"). To reactivate the access you have to do a successful login after RCLONE_WEBDAV_BAN_DURATION or manually rename the folder (via mv command) to the name of the user, so removing the extension "_banned".
     </p>
   </li>
 </ol> 
@@ -163,7 +163,7 @@ Beside the dependency to the built-in radius server and to <a href="https://gith
 So, currently the following package will be installed during <a href="#installation">installation</a>:
 <ul><li>freeradius-utils=3.2.1+dfsg-3~bpo11+1</li></ul>
 <h2>Security considerations</h2>
-Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentication">http basic authentication</a>. Even additionally secured with https (using the certs of the UDM/UCG) the authentication scheme remains poor and is especially unprotected against brute force attacks, because by default endless login failures are allowed. For this reason, this Webdav server is additionally secured via the custom auth_proxy, which bans the user folder when a login fails. The latter makes the server vulnerable for Denial of Service (DoS) for known usernames. It is why you should use non trivial username (like 'admin', 'user', 'guest',...) and do not share the username to third parties. In addition it is also not recommended to connect to this webdav server from public devices as the authentication scheme is also poor in the handling of sessions (no logout). In summary I recommend the <b>following rules to keep secure</b>:<br/>
+Rclone uses <a href="https://rclone.org/commands/rclone_serve_webdav/#authentication">http basic authentication</a>. Even additionally secured with https (using the certs of the UDM/UCG) the authentication scheme remains poor and is especially unprotected against brute force attacks, because by default endless login failures are allowed. For this reason, this Webdav server is additionally secured via the custom auth_proxy, which bans the user folder when a login fails. The latter makes the server vulnerable for Denial of Service (DoS) for known usernames. Also because rclone is caching entries for directory + password hash after successful login for the duration defined in its "dir-cache-time" the auth proxy, which bans the user folder, is not called for this period making the server still vulnarable for brute force attack. It is why you should use non trivial username (like 'admin', 'user', 'guest',...) and do not share the username to third parties. In addition it is also not recommended to connect to this webdav server from public devices as the authentication scheme is also poor in the handling of sessions (no logout). In summary I recommend the <b>following rules to keep secure</b>:<br/>
 <ul>
   <li><b>Do not use standard usernames</b> ('admin', 'user', 'guest',...)</li>
   <li><b>Do not connect</b> to this Webdav server <b>from public devices/computers</b>, that are not in your ownership or shared with third parties..</li>
