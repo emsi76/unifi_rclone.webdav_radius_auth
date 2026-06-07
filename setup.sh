@@ -141,7 +141,7 @@ install_rclone(){
 }
 
 install_freeradius-utils(){
-	echo try installing freeradius-utils (depending on firmware version)
+	echo try installing freeradius-utils depending on firmware version
 	if [[ "${FIRMWARE_VER}" =~ ^5.* ]]
 	then
 		(sudo apt install -y freeradius-utils=3.2.1+dfsg-3~bpo11+1+ui1-20+gf4cd4c42ec0b || true)
