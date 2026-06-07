@@ -49,6 +49,7 @@ Successfully tested on (only one device so far due to lack of hardware):
   <td>Model: UniFi Cloud Gateway Fiber</td>
   <td><ul><li>Firmware: 5.0.16</li></ul></td>
   <td><ul><li>Firmware: 5.1.12</li></ul></td>
+  <td><ul><li>Firmware: 5.1.15</li></ul></td>
   </tr>
   </table>
 </p>
