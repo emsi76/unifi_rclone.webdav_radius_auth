@@ -8,13 +8,15 @@ exists_in_list() {
 }
 
 STD_IN=$(</dev/stdin)
-#echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
 
 # Load environment variables
 set -a
 source /data/rclone_webdav_radius/rclone_webdav_radius.env
 set +a
 
+echo "Auth Proxy called" >> ${RCLONE_WEBDAV_LOG_PATH}
+
+#echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
 user=$(echo $STD_IN | jq --raw-output '.user')
 pass=$(echo $STD_IN | jq --raw-output '.pass')
 
