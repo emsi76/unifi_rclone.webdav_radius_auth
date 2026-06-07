@@ -41,7 +41,6 @@ if [ $has_access -eq 1 ]; then
     myhost+="$(hostname -y)"
     
     #echo "radius host $myhost" >> ${RCLONE_WEBDAV_LOG_PATH} 
-    
     auth=$(radtest $user $pass $myhost $RCLONE_WEBDAV_RADIUS_PORT $RCLONE_WEBDAV_RADIUS_SECRET |  grep -c 'Access-Accept')
     
     if [ $auth == 1 ]; then
@@ -62,7 +61,7 @@ if [ $has_access -eq 1 ]; then
                     printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
                 else
                     printf "Still blocked login: auth not successful for user $user"
-                fi 
+                fi
             else #ban duration not defined, so block
                 printf "Blocked login: auth not successful for user $user"
             fi
@@ -75,5 +74,5 @@ if [ $has_access -eq 1 ]; then
         printf "Failed login: auth not successful for user $user"
     fi
 else
-        printf "Blocked login: user $user is not in radius allowed list"
+    printf "Blocked login: user $user is not in radius allowed list"
 fi
