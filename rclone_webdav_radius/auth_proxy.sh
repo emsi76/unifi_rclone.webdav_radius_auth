@@ -61,9 +61,11 @@ if [ $has_access -eq 1 ]; then
                     printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
                 else
                     printf "{ \"error\":\"Still blocked login: auth not successful for user $user \" }\n"
+                    exit 1
                 fi
             else #ban duration not defined, so block
                 printf "{ \"error\":\"Blocked login: auth not successful for user $user\" }\n"
+                exit 1
             fi
         fi
     else
@@ -72,7 +74,9 @@ if [ $has_access -eq 1 ]; then
             mv "${RCLONE_WEBDAV_ROOT_PATH}/${user}/" "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/"
         fi
         printf "{ \"error\":\"Failed login: auth not successful for user $user \" }\n"
+        exit 1
     fi
 else
     printf "{ \"error\":\"Blocked login: user $user is not in radius allowed list \" }\n"
+    exit 1
 fi
