@@ -14,7 +14,7 @@ set -a
 source /data/rclone_webdav_radius/rclone_webdav_radius.env
 set +a
 
-echo "Auth Proxy called" >> ${RCLONE_WEBDAV_LOG_PATH}
+#echo "Auth Proxy called" >> ${RCLONE_WEBDAV_LOG_PATH}
 
 #echo "STDIN is $STD_IN" >> ${RCLONE_WEBDAV_LOG_PATH}
 user=$(echo $STD_IN | jq --raw-output '.user')
@@ -54,7 +54,7 @@ if [ $has_access -eq 1 ]; then
             # ban duration defined?
             if [ -n "${RCLONE_WEBDAV_BAN_DURATION}" ]; then
                 MTIME=$(stat -c %Z "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/") # mtime of banned folder as Unix-Timestamp
-                echo "MTIME is $MTIME" >> ${RCLONE_WEBDAV_LOG_PATH}
+                # echo "MTIME is $MTIME" >> ${RCLONE_WEBDAV_LOG_PATH}
                 NOW=$(date +%s)
                 AGE=$((NOW - MTIME))
                 #already banned longer than ban duration?
@@ -64,7 +64,7 @@ if [ $has_access -eq 1 ]; then
                     mv "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/" "${RCLONE_WEBDAV_ROOT_PATH}/${user}/"
                     printf "{\"type\":\"local\",\"_root\":\"${RCLONE_WEBDAV_ROOT_PATH}/${user}\",\"user\":\"$user\",\"pass\":\"$pass\"}\n"
                 else
-                    echo "${user} banned since ${AGE}" >> ${RCLONE_WEBDAV_LOG_PATH}
+                    # echo "${user} banned since ${AGE}" >> ${RCLONE_WEBDAV_LOG_PATH}
                     printf "{ \"error\":\"Still blocked login: auth not successful for user $user \" }\n"
                     exit 1
                 fi
