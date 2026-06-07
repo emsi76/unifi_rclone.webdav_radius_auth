@@ -51,7 +51,7 @@ if [ $has_access -eq 1 ]; then
         else # successfull login but banned
             # ban duration defined?
             if [ -n "${RCLONE_WEBDAV_BAN_DURATION}" ]; then
-                MTIME=$(stat -c %Y "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/") # mtime of banned folder as Unix-Timestamp
+                MTIME=$(stat -c %Z "${RCLONE_WEBDAV_ROOT_PATH}/${user}_banned/") # mtime of banned folder as Unix-Timestamp
                 echo "MTIME is $MTIME" >> ${RCLONE_WEBDAV_LOG_PATH}
                 NOW=$(date +%s)
                 AGE=$((NOW - MTIME))
